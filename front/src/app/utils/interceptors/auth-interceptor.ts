@@ -1,4 +1,3 @@
-// auth-interceptor.ts
 import { HttpInterceptorFn } from '@angular/common/http';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
@@ -11,7 +10,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     : null;
 
   if (token) {
-    console.debug('[authInterceptor] Attaching Authorization header');
+    console.debug('[authInterceptor]', req.method, req.url, token ? 'with token' : 'no token');
     req = req.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
   }else {
   console.debug('[authInterceptor] No token found');

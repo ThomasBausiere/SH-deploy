@@ -10,15 +10,14 @@
 /* ===== Modale (carte verre) ===== */
 .modal{
   position: fixed;
-  z-index: 2147483647;              /* au-dessus du backdrop */
+  z-index: 2147483647;              
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   width: min(920px, 92vw);
   max-height: 86vh;
 
   display: grid;
-  grid-template-rows: auto minmax(0,1fr) auto; /* header / body scroll / footer */
-  gap: .75rem;
+  grid-template-rows: auto minmax(0,1fr) auto; 
 
   padding: 1rem;
   border-radius: 20px;
@@ -29,7 +28,7 @@
   box-shadow: 0 30px 90px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.05);
   color: #fff;
 
-  /* petite anim d’apparition */
+  
   opacity: 0; transform-origin: 50% 40%;
   animation: modal-in .18s ease-out forwards;
 }
@@ -66,7 +65,7 @@
 
 /* ===== Corps scrollable ===== */
 .modal__body{
-  min-height: 0;                 /* pour que overflow fonctionne en grid */
+  min-height: 0;                 
   overflow: auto;
   padding: .25rem;
 }

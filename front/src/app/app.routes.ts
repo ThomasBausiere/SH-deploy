@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import { mapToCanActivate, Routes } from '@angular/router';
 import { MainContent } from './components/main-content/main-content';
 import { Login } from './components/login/login';
 import { Register } from './components/register/register';
@@ -9,6 +9,7 @@ import { isLoggedGuard } from './utils/guards/is-logged-guard';
 import { loginRedirect } from './utils/guards/loginRedirect';
 import { isAdminGuard } from './utils/guards/is-admin.guard';
 import { AdminPanel } from './components/admin-panel/admin-panel';
+import { Settings } from './components/settings/settings';
 
 export const routes: Routes = [
     {path:"", component:MainContent},
@@ -17,5 +18,6 @@ export const routes: Routes = [
     {path:"newToon", component:Newtoon, canActivate: [isLoggedGuard]},
     {path:"showToons", component:ToonList, canActivate: [isLoggedGuard]},
     { path: 'admin', component: AdminPanel, canActivate: [isLoggedGuard, isAdminGuard] },
+    {path:"settings", component: Settings, canActivate:[isLoggedGuard]},
     { path: '**', redirectTo: '' },
 ];

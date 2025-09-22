@@ -23,7 +23,6 @@
   color:#fff; font-size:.85rem; line-height:1.2;
 }
 
-/* Répartition % : s’adapte et ne déborde pas en X */
 .skills-table col.col-skill{      width:28%; }
 .skills-table col.col-profession{ width:16%; }
 .skills-table col.col-attr{       width:16%; }
@@ -31,7 +30,6 @@
 .skills-table col.col-boss{       width:12%; }
 .skills-table col.col-add{        width:12%;  }
 
-/* header */
 .skills-table thead th{
   position:sticky; top:0; z-index:1;
   text-align:left; padding:.35rem .6rem;
@@ -46,7 +44,7 @@
   padding:.30rem .6rem;
   border-bottom:1px solid rgba(255,255,255,.08);
   vertical-align:middle;
-  overflow:hidden;            /* ⬇️ trio pour l’ellipsis */
+  overflow:hidden;            
   text-overflow:ellipsis;
   white-space:nowrap;
 }

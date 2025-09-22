@@ -3,11 +3,11 @@
   width: 100%;
 }
 
-/* ====== BARRE (tu gardes ton style actuel) ====== */
+
 .search {
   --sb-h: 42px;
   --gold: #d8a84a;
-  position: relative;   /* ⬅ nécessaire pour ancrer le dropdown */
+  position: relative;  
 }
 
 .search form {
@@ -43,7 +43,7 @@
   box-shadow: 0 0 0 2px rgba(216,168,74,.22);
 }
 
-/* ====== CHIP "Filter" cliquable ====== */
+
 .filter-chip {
   position: relative;
   margin-left: auto;
@@ -76,7 +76,7 @@
 /* ====== DROPDOWN PANEL ====== */
 .filter-panel {
   position: absolute;
-  inset-inline-end: .25rem;   /* collé au chip à droite */
+  inset-inline-end: .25rem;   
   top: calc(100% + .5rem);
   min-width: min(720px, 95vw);
   padding: .9rem;

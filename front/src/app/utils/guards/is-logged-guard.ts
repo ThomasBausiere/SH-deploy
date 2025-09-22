@@ -7,7 +7,6 @@ export const isLoggedGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   const token = api.getToken();
 
-  // si pas loggé → redirige vers login en conservant l’URL demandée
   if (!token) {
     return router.createUrlTree(['/login'], { queryParams: { redirectUrl: state.url } });
   }

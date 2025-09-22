@@ -1,0 +1,68 @@
+<section class="settings">
+  <div class="settings__grid">
+
+    <div class="card">
+      <h2>{{ user?.pseudo || '—' }}</h2>
+      <p><strong>Email:</strong> {{ user?.email || '—' }}</p>
+
+      <hr />
+
+      <div class="actions">
+        <button type="button" class="btn" (click)="openChange()">
+          Change password
+        </button>
+
+        <button type="button" class="btn btn--danger" (click)="openDelete()">
+          Delete account
+        </button>
+      </div>
+    </div>
+
+    <div class="card">
+
+      @if (mode === 'change') {
+        <h3>Change Password</h3>
+
+        <form #f="ngForm" novalidate (ngSubmit)="submitPassword()">
+  <label class="field">
+    <span>Enter your new password</span>
+    <input type="password"
+           [(ngModel)]="newPassword"
+           name="newPassword"
+           required minlength="6" />
+  </label>
+
+  <label class="field">
+    <span>Confirm password</span>
+    <input type="password"
+           [(ngModel)]="confirmPassword"
+           name="confirmPassword"
+           required minlength="6" />
+  </label>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn--primary" [disabled]="f.invalid">Update Password</button>
+    <button type="button" class="btn" (click)="cancel()">Cancel</button>
+  </div>
+</form>
+      }
+
+      @else if (mode === 'delete') {
+        <h3>Delete Account</h3>
+        <p class="warn">
+          This action is <strong>permanent</strong>. All your data will be removed.
+        </p>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn--danger" (click)="confirmDelete()">Confirm deleting</button>
+          <button type="button" class="btn" (click)="cancel()">Cancel</button>
+        </div>
+      }
+
+      @else {
+        <h3>Account</h3>
+        <p>Select an action on the left.</p>
+      }
+    </div>
+  </div>
+</section>

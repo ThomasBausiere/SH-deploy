@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/skills")
+@RequestMapping("/api/public/skills")
 @CrossOrigin(origins = "http://localhost:4200")
 public class SkillController {
     private final SkillService skillService;

@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2cbb31eb-7c7e-4524-8240-1f18a50cafed" name="Changes" comment="" />
+    <list default="true" id="2cbb31eb-7c7e-4524-8240-1f18a50cafed" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/back/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/back/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/org/example/api_sh/config/SecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/org/example/api_sh/service/BossService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/org/example/api_sh/service/BossService.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -23,6 +29,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
     &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
     &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
@@ -30,7 +37,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;Spring Boot.ApiShApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feat/auth&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Perso/Perso/Repo_Java/api_sh&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -79,6 +86,8 @@
       <workItem from="1756718150277" duration="2338000" />
       <workItem from="1756742212240" duration="610000" />
       <workItem from="1756805349113" duration="1367000" />
+      <workItem from="1756818286655" duration="1429000" />
+      <workItem from="1756935979344" duration="20000" />
     </task>
     <servers />
   </component>

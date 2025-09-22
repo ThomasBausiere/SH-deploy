@@ -1,4 +1,3 @@
-// src/app/utils/guards/is-admin.guard.ts
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { ApiServicePublic } from '../services/api-service-public';

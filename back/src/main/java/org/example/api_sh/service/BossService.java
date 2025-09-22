@@ -4,7 +4,6 @@ package org.example.api_sh.service;
 import org.example.api_sh.dto.BossDto;
 import org.example.api_sh.entity.Boss;
 import org.example.api_sh.entity.Skill;
-import org.example.api_sh.entity.enums.Attribute;
 import org.example.api_sh.entity.enums.Campaign;
 import org.example.api_sh.entity.enums.Profession;
 import org.example.api_sh.exeception.NotFoundException;

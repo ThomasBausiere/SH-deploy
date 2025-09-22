@@ -9,10 +9,10 @@ HTML {
 
 .app-container {
   display: grid;
-  grid-template-rows: auto 1fr; /* 1ère ligne pour navbar, 2ème pour contenu */
-  grid-template-columns: 10% 1fr; /* Colonne gauche = marge, colonne droite = contenu */
+  grid-template-rows: auto 1fr; 
+  grid-template-columns: 10% 1fr; 
   height: 100vh;
-  gap: 30px 0; /* espace vertical entre la navbar et le contenu */
+  gap: 30px 0; 
   box-sizing: border-box;
   background-image: url("../../public/images/bg_01.jpg");
   margin: 0;
@@ -22,8 +22,8 @@ HTML {
 
 /* Contenu principal */
 .main-wrapper {
-  grid-column: 2 / 3; /* dans la colonne 2 */
-  grid-row: 2 / 3; /* deuxième ligne */
+  grid-column: 2 / 3; 
+  grid-row: 2 / 3; 
   width: 90%;
   border-radius: 8px;
   padding: 20px;

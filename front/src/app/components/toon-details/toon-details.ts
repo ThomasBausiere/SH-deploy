@@ -32,12 +32,10 @@ export class ToonDetails implements OnInit, OnDestroy {
   ngOnInit(): void {
         if (!this.isBrowser) return;
 
-    // 1) lire selectedToonId depuis localStorage au boot et pousser dans le service
     const raw = localStorage.getItem('selectedToonId');
     const id = raw ? Number(raw) : null;
     this.live.setSelectedToon(id && !Number.isNaN(id) ? id : null);
 
-    // 2) se brancher aux flux (id + compteur)
     this.sub = new Subscription();
 
     this.sub.add(
@@ -71,7 +69,6 @@ export class ToonDetails implements OnInit, OnDestroy {
       })
     );
 
-    // 3) si l’id change ailleurs (ex: dans la liste de toons), sync via storage
     window.addEventListener('storage', this.onStorageChange);
   }
 

@@ -21,7 +21,10 @@ import { ToonType } from '../../utils/types/toon-type';
 export class SkillsList implements OnInit {
   @Input() skillsList!: SkillType[];
   @Output() showBossEvent = new EventEmitter<number>();
-  @Output() ownershipChange = new EventEmitter<{ skillId: number; owned: boolean }>();
+  @Output() ownershipChange = new EventEmitter<{
+    skillId: number;
+    owned: boolean;
+  }>();
 
   apipublic = inject(ApiServicePublic);
   apiProtected = inject(ApiServiceProtected);
@@ -31,49 +34,52 @@ export class SkillsList implements OnInit {
   ownedSkillIds = new Set<number>();
   loadingSkillIds = new Set<number>();
 
-ngOnInit(): void {
-  const raw = typeof localStorage !== 'undefined' ? localStorage.getItem('selectedToonId') : null;
-  this.selectedToonId = raw ? Number(raw) : null;
+  ngOnInit(): void {
+    const raw =
+      typeof localStorage !== 'undefined'
+        ? localStorage.getItem('selectedToonId')
+        : null;
+    this.selectedToonId = raw ? Number(raw) : null;
 
-  if (this.selectedToonId && !Number.isNaN(this.selectedToonId)) {
-    this.loadToonSkills(this.selectedToonId);
-  }
+    if (this.selectedToonId && !Number.isNaN(this.selectedToonId)) {
+      this.loadToonSkills(this.selectedToonId);
+    }
 
-  // écouter un changement ultérieur (ex: depuis la liste de toons)
-  if (typeof window !== 'undefined') {
-    window.addEventListener('storage', this.onStorageChange);
-  }
-}
-
-  ngOnDestroy(): void {
-  if (typeof window !== 'undefined') {
-    window.removeEventListener('storage', this.onStorageChange);
-  }
-}
-
-private onStorageChange = (e: StorageEvent) => {
-  if (e.key === 'selectedToonId') {
-    const raw = localStorage.getItem('selectedToonId');
-    const id = raw ? Number(raw) : null;
-    this.selectedToonId = id;
-    if (id && !Number.isNaN(id)) {
-      this.loadToonSkills(id);
-    } else {
-      this.ownedSkillIds.clear();
+    if (typeof window !== 'undefined') {
+      window.addEventListener('storage', this.onStorageChange);
     }
   }
-};
 
-private loadToonSkills(toonId: number) {
-  this.apiProtected.getToon(toonId).subscribe({
-    next: (toon: ToonType) => {
-      console.log('Toon chargé depuis l’API :', toon);
-      const ids = (toon?.skills ?? []).map(s => s.id);
-      this.ownedSkillIds = new Set(ids);
-    },
-    error: (err) => console.error('Impossible de charger le Toon sélectionné', err),
-  });
-}
+  ngOnDestroy(): void {
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('storage', this.onStorageChange);
+    }
+  }
+
+  private onStorageChange = (e: StorageEvent) => {
+    if (e.key === 'selectedToonId') {
+      const raw = localStorage.getItem('selectedToonId');
+      const id = raw ? Number(raw) : null;
+      this.selectedToonId = id;
+      if (id && !Number.isNaN(id)) {
+        this.loadToonSkills(id);
+      } else {
+        this.ownedSkillIds.clear();
+      }
+    }
+  };
+
+  private loadToonSkills(toonId: number) {
+    this.apiProtected.getToon(toonId).subscribe({
+      next: (toon: ToonType) => {
+        console.log('Toon chargé depuis l’API :', toon);
+        const ids = (toon?.skills ?? []).map((s) => s.id);
+        this.ownedSkillIds = new Set(ids);
+      },
+      error: (err) =>
+        console.error('Impossible de charger le Toon sélectionné', err),
+    });
+  }
 
   hasSkill(skillId: number): boolean {
     return this.ownedSkillIds.has(skillId);
@@ -104,38 +110,44 @@ private loadToonSkills(toonId: number) {
   }
 
   /** ADD */
-private addSkillToToon(skillId: number, finalize: () => void): void {
-    if (!this.selectedToonId) { finalize(); return; }
+  private addSkillToToon(skillId: number, finalize: () => void): void {
+    if (!this.selectedToonId) {
+      finalize();
+      return;
+    }
 
-    this.ownedSkillIds.add(skillId); // optimistic
+    this.ownedSkillIds.add(skillId); 
 
     this.apiProtected.addSkillToon(this.selectedToonId, skillId).subscribe({
       next: () => {
-        // informe le parent -> il pourra appliquer les filtres (hideOwned / ownedOnly)
-        this.ownershipChange.emit({ skillId, owned: true });            // 👈 NEW
+      
+        this.ownershipChange.emit({ skillId, owned: true }); 
         finalize();
       },
       error: (err) => {
         console.error('Ajout skill échoué', err);
-        this.ownedSkillIds.delete(skillId); // rollback
+        this.ownedSkillIds.delete(skillId); 
         finalize();
       },
     });
   }
 
   private removeSkillFromToon(skillId: number, finalize: () => void): void {
-    if (!this.selectedToonId) { finalize(); return; }
+    if (!this.selectedToonId) {
+      finalize();
+      return;
+    }
 
-    const had = this.ownedSkillIds.delete(skillId); // optimistic
+    const had = this.ownedSkillIds.delete(skillId); 
 
     this.apiProtected.removeSkillToon(this.selectedToonId, skillId).subscribe({
       next: () => {
-        this.ownershipChange.emit({ skillId, owned: false });            
+        this.ownershipChange.emit({ skillId, owned: false });
         finalize();
       },
       error: (err) => {
         console.error('Suppression skill échouée', err);
-        if (had) this.ownedSkillIds.add(skillId); // rollback
+        if (had) this.ownedSkillIds.add(skillId); 
         finalize();
       },
     });

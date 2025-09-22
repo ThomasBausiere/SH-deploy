@@ -93,5 +93,13 @@ createSkill(body: { name: string }) {
     return this.http.put<any>(`${this.baseUrlPublic}/bosses/${id}`, { id, ...body });
   }
 
+
+changeMyPassword(userId: number, newPassword: string) {
+  return this.http.patch(`${this.baseUrl}/user/${userId}/password`, { newPassword });
+}
+
+deleteMyAccount(userId: number) {
+  return this.http.delete(`${this.baseUrl}/user/${userId}`);
+}
   
 }

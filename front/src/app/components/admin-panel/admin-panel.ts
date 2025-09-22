@@ -130,7 +130,7 @@ export class AdminPanel implements OnInit {
         this.editForm = this.fb.group({
           email: [this.modalEntity?.email ?? '', [Validators.required, Validators.email]],
           pseudo: [this.modalEntity?.pseudo ?? '', [Validators.required, Validators.minLength(2)]],
-          // si tu veux gérer le password admin-side, ajoute un champ
+          
         });
         break;
 
@@ -169,21 +169,16 @@ export class AdminPanel implements OnInit {
         break;
 
       case 'toons':
-        // pour créer un toon admin-side, il te faut idéalement userId + name + profession
+        
         this.createForm = this.fb.group({
           userId: [null, [Validators.required]],
           name: ['', [Validators.required, Validators.minLength(2)]],
-          profession: ['', [Validators.required]], // string libre (ou select), à mapper côté back
+          profession: ['', [Validators.required]], 
         });
         break;
 
       case 'users':
-        // pas de bouton Add pour users (selon ton besoin). Si tu en veux un, décommente :
-        // this.createForm = this.fb.group({
-        //   email: ['', [Validators.required, Validators.email]],
-        //   pseudo: ['', [Validators.required, Validators.minLength(2)]],
-        //   password: ['', [Validators.required, Validators.minLength(6)]],
-        // });
+
         break;
     }
   }

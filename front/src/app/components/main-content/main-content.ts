@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { BossList } from '../boss-list/boss-list';
-import { SearchBar, SkillFilters } from '../search-bar/search-bar';           // ⬅️ + SkillFilters
+import { SearchBar, SkillFilters } from '../search-bar/search-bar';          
 import { SkillsList } from '../skills-list/skills-list';
 import { SkillType } from '../../utils/types/skill-type';
 import { BossType } from '../../utils/types/boss-type';
 import { ApiServicePublic } from '../../utils/services/api-service-public';
-import { ApiServiceProtected } from '../../utils/services/api-service-protected'; // ⬅️
+import { ApiServiceProtected } from '../../utils/services/api-service-protected'; 
 import { ToonDetails } from "../toon-details/toon-details";
 import { ToonLiveStateService } from '../../utils/services/toon-live-state-service';
 
@@ -72,7 +72,7 @@ export class MainContent implements OnInit, OnDestroy {
 
   // === handlers ===
   handleSearch(search: string): void {
-    // garde ta recherche back, puis on filtre côté front
+    
     this.searchText = search ?? '';
     this.apiPublic.getSkillsBy(this.searchText).subscribe({
       next: (list) => {
@@ -147,7 +147,7 @@ export class MainContent implements OnInit, OnDestroy {
         const ids = (toon?.skills ?? []).map(s => s.id);
         this.ownedIds = new Set(ids);
         this.live.setOwnedCount(ids.length);
-        this.applyFilters(); // si un filtre owned est actif, rafraîchir
+        this.applyFilters(); 
       },
       error: (err) => console.error('Failed to load toon for ownedIds', err),
     });
@@ -167,7 +167,7 @@ export class MainContent implements OnInit, OnDestroy {
     this.ownedIds.delete(e.skillId);
     this.live.decOwned();  
   }
-  // Refiltrer immédiatement selon ownedMode (hideOwned / ownedOnly)
+ 
   this.applyFilters();
 }
 }

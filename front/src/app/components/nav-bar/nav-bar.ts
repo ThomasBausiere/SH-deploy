@@ -24,11 +24,11 @@ export class NavBar implements OnInit {
   ngOnInit() {
     this.isBrowser = isPlatformBrowser(this.platformId);
 
-    // Pas d'accès direct à localStorage :
-    this.isLogged = this.apiPublic.isAuthenticated(); // lit token de manière safe
+    
+    this.isLogged = this.apiPublic.isAuthenticated(); 
 
     if (this.isLogged) {
-      // Récupère le rôle côté back (source de vérité)
+     
       this.api.me().subscribe({
         next: (me) => (this.isAdmin = me.role === 'ADMIN'),
         error: () => (this.isAdmin = false),

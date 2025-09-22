@@ -7,6 +7,9 @@
 @if (isLogged && isAdmin) {
   <a routerLink="/admin" class="nav-link">Admin</a>
 }   
+@if(token){
+   <a routerLink="/settings" routerLinkActive="active">Account</a>
+}
  
 
   @if (token) {
