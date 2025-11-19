@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { UserType } from '../types/user-type';
 import { Observable } from 'rxjs';
 import { ToonCreateRequest, ToonRenameRequest, ToonType } from '../types/toon-type';
+import { API_BASE_URL } from '../../api.config';
 
 
 @Injectable({
@@ -10,7 +11,7 @@ import { ToonCreateRequest, ToonRenameRequest, ToonType } from '../types/toon-ty
 })
 export class ApiServiceAdmin {
 
-    private baseUrl = "http://localhost:8080/api/admin"
+    private baseUrl = `${API_BASE_URL}/admin`;
 
   constructor(private http: HttpClient){}
 

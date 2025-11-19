@@ -3,14 +3,15 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserType } from '../types/user-type';
 import { ToonCreateRequest, ToonRenameRequest, ToonType } from '../types/toon-type';
+import { API_BASE_URL } from '../../api.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiServiceProtected {
-  private baseUrl = "http://localhost:8080/api/private";
-  private baseUrlPublic = "http://localhost:8080/api/public";
-  private baseUrlAdmin ="http://localhost:8080/api/admin"
+  private baseUrl = `${API_BASE_URL}/private`;
+  private baseUrlPublic = `${API_BASE_URL}/public`;
+  private baseUrlAdmin =`${API_BASE_URL}/admin`
 
   constructor(private http: HttpClient){}
 

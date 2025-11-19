@@ -50,7 +50,10 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         var c = new CorsConfiguration();
-        c.setAllowedOrigins(List.of("http://localhost:4200"));
+        c.setAllowedOrigins(List.of(
+                "http://localhost:4200",   // dev
+                "https://gw-sh.net"        // prod
+        ));
         c.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         c.setAllowedHeaders(List.of("*"));
         c.setAllowCredentials(true);

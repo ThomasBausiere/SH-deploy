@@ -6,12 +6,13 @@ import { BossType } from '../types/boss-type';
 import { UserPublic, UserRegister } from '../types/user-public';
 import { isPlatformBrowser } from '@angular/common';
 import { Token } from '@angular/compiler';
+import { API_BASE_URL } from '../../api.config';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiServicePublic {
-  private baseUrl = 'http://localhost:8080/api/public';
+  private baseUrl = `${API_BASE_URL}/public`;
 
   constructor(private http: HttpClient) {}
 

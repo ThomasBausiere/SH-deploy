@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserType } from '../types/user-type';
+import { API_BASE_URL } from '../../api.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private userUrl = 'http://localhost:8080/api/public/auth';
+  private userUrl = `${API_BASE_URL}/public/auth`;
   constructor(private http: HttpClient) {}
 
   createUser(post:UserType):Observable<UserType>{
