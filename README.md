@@ -20,7 +20,7 @@ Mon application **recense** ces compétences élites et **affiche** les boss qui
 - Naviguer dans un **catalogue** (compétences ⇄ boss) avec filtres et recherche.
 - Utiliser un **panel admin** pour gérer **utilisateurs / toons / boss / compétences**.
 
----
+--- 
 
 ## 🧱 Architecture & techno 
 
@@ -28,7 +28,7 @@ Mon application **recense** ces compétences élites et **affiche** les boss qui
 **Back** : Java **17+**, Spring Boot 3.x, Spring Security (JWT Bearer), Spring Data JPA, MapStruct/Lombok (si présents).  
 **DB** : MySQL 8.x.  
 **Data** : Script **Python** de scraping (compétences & boss).  
-**Design** : Maquettes **Figma**.  
+**Design** : Maquettes **Figma**. 
 
 
 ---
