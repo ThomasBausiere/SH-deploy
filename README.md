@@ -22,7 +22,7 @@ Mon application **recense** ces compétences élites et **affiche** les boss qui
 
 ---
 
-## 🧱 Architecture & techno
+## 🧱 Architecture & techno 
 
 **Front** : Angular **20+**, TypeScript, RxJS, Angular Router, Tailwind (optionnel).  
 **Back** : Java **17+**, Spring Boot 3.x, Spring Security (JWT Bearer), Spring Data JPA, MapStruct/Lombok (si présents).  
