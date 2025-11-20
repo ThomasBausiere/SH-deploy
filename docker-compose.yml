@@ -34,7 +34,7 @@ services:
   front:
     image: mazodev/sh-front:latest
     container_name: sh-front
-    restart: siempre
+    restart: always
     depends_on:
       - back
 
