@@ -12,7 +12,7 @@
 
 ## 🎯 Objectif du projet (projet passion)
 
-Dans **Guild Wars** (NCsoft), un titre/succès consiste à **capturer 300 compétences élites** disséminées aux quatre coins du monde, détenues par des **boss**. Les joueurs doivent trouver puis éliminer ces boss pour **capturer** chaque compétence.
+Dans **Guild Wars** (NCsoft), un titre/succès consiste à **capturer 300 compétences élites** disséminées aux quatre coins du monde, détenues par des **Boss**. Les joueurs doivent trouver puis éliminer ces boss pour **capturer** chaque compétence.
 
 Mon application **recense** ces compétences élites et **affiche** les boss qui les possèdent, afin d'aider les joueurs dans leur **quête de chasseur de compétences**. Les utilisateurs peuvent :
 - **Créer un compte** et **s'authentifier** (Spring Security, JWT).
