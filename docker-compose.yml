@@ -1,6 +1,7 @@
 version: '3.9'
 
 services:
+
   db:
     image: mysql:8.0
     restart: always
@@ -10,27 +11,39 @@ services:
     volumes:
       - db_data:/var/lib/mysql
     ports:
-      - "3307:3306"
+      - "3307:3306"   # Facultatif, utile seulement pour les tests locaux
 
   back:
-    build: ./back
+    image: mazodev/sh-back:latest
+    container_name: sh-back
+    restart: always
     depends_on:
       - db
     environment:
       SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
       SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
-    ports:
-      - "8080:8080"
-    restart: always
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sh-back.rule=Host(`api.gw-sh.net`)"
+      - "traefik.http.routers.sh-back.entrypoints=websecure"
+      - "traefik.http.routers.sh-back.tls.certresolver=myresolver"
+      - "traefik.http.services.sh-back.loadbalancer.server.port=8080"
 
   front:
-    build: ./front
+    image: mazodev/sh-front:latest
+    container_name: sh-front
+    restart: siempre
     depends_on:
       - back
-    ports:
-      - "4200:80"
-    restart: always
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sh-front.rule=Host(`gw-sh.net`)"
+      - "traefik.http.routers.sh-front.entrypoints=websecure"
+      - "traefik.http.routers.sh-front.tls.certresolver=myresolver"
+      - "traefik.http.services.sh-front.loadbalancer.server.port=80"
 
 volumes:
   db_data:
