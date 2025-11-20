@@ -10,7 +10,7 @@
 
 ---
 
-## 🎯 Objectif du projet 
+## 🎯 Objectif du projet
 
 Dans **Guild Wars** (NCsoft, ArenaNet), un titre/succès consiste à **capturer 300 compétences élites** disséminées aux quatre coins du monde, détenues par des **Boss**. Les joueurs doivent donc traquer puis éliminer ces boss pour **capturer** chaque compétence.
 
