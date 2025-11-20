@@ -28,7 +28,7 @@ Mon application **recense** ces compétences élites et **affiche** les boss qui
 **Back** : Java **17+**, Spring Boot 3.x, Spring Security (JWT Bearer), Spring Data JPA, MapStruct/Lombok (si présents).  
 **DB** : MySQL 8.x.  
 **Data** : Script **Python** de scraping (compétences & boss).  
-**Design** : Maquettes **Figma**. 
+**Design** : Maquettes **Figma**.  
 
 
 ---
