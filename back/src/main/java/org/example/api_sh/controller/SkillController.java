@@ -17,19 +17,6 @@ public class SkillController {
     }
 
 
-    // CREATE 1
-    @PostMapping
-    public Skill save(@RequestBody Skill skill) {
-        return skillService.createSkill(skill);
-    }
-
-    //CREATE MANY
-
-    @PostMapping("/bulk")
-    public List<Skill> saveAll(@RequestBody List<Skill> skills) {
-        return skillService.createSkills(skills);
-    }
-
     //READ 1
 
     @GetMapping("/{id}")
@@ -44,19 +31,7 @@ public class SkillController {
         return skillService.readSkills();
     }
 
-    //UPDATE
 
-    @PutMapping("/{id}")
-    public Skill update(@PathVariable Integer id, @RequestBody Skill skill) {
-        return skillService.updateSkill(id, skill);
-    }
-
-    //DELETE
-
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id) {
-        skillService.deleteSkill(id);
-    }
 
     //SEARCH
     @GetMapping("/search")

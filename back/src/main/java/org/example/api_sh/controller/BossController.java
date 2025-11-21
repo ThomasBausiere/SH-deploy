@@ -18,19 +18,6 @@ public class BossController {
         this.bossService = bossService;
     }
 
-    //CREATE 1
-
-    @PostMapping
-    public Boss create(@RequestBody Boss boss) {
-        return bossService.createBoss(boss);
-    }
-
-    //CREATE MANY
-
-    @PostMapping("/import")
-    public List<Boss> importBosses(@RequestBody List<BossDto> bossDtos) {
-        return bossService.importBosses(bossDtos);
-    }
 
     //READ 1
 
@@ -43,16 +30,7 @@ public class BossController {
     public List<Boss> getAll() {
         return bossService.readBosses();
     }
-    // UPDATE
-    @PutMapping("/{id}")
-    public Boss update(@PathVariable Integer id, @RequestBody Boss boss) {
-        return bossService.updateBoss(id, boss);
-    }
-    //DELETE
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id) {
-        bossService.deleteBoss(id);
-    }
+
 
     //READ BOSS BY SKILL ID
 
