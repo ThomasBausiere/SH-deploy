@@ -9,5 +9,5 @@ RUN npm run build -- --configuration=production
 # Étape 2 : servir le build avec Nginx
 FROM nginx:alpine
 RUN rm -rf /usr/share/nginx/html/*
-COPY --from=builder /app/dist/front-sh /usr/share/nginx/html
+COPY --from=builder /app/dist/front-sh/browser /usr/share/nginx/html
 EXPOSE 80
