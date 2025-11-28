@@ -1,5 +1,25 @@
 <div class="app-container">
+  
+  <!-- NAV DESKTOP -->
   <app-nav-bar></app-nav-bar>
+
+  <!-- BURGER BUTTON (label, pas button !) -->
+  <label class="burger-btn" for="navToggle" aria-label="Open menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </label>
+
+  <!-- CHECKBOX HIDDEN: État du menu -->
+  <input type="checkbox" id="navToggle" class="nav-toggle" />
+
+  <!-- OVERLAY -->
+  <label for="navToggle" class="nav-overlay"></label>
+
+  <!-- NAV MOBILE -->
+  <nav class="mobile-nav">
+    <app-nav-bar></app-nav-bar>
+  </nav>
 
   <main class="main-wrapper">
     <router-outlet></router-outlet>

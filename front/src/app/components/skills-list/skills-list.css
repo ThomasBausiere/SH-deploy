@@ -67,7 +67,96 @@
 /* la colonne Add reste serrée */
 .col-add{ width:1%; }
 
-/* aucun scroll horizontal, même sur petit écran */
-@media (max-width:700px){
-  .table-wrap{ overflow-x:hidden; } /* garde Y seulement */
+
+
+/* ===================================== */
+/*          SKILLS-LIST — MOBILE         */
+/* ===================================== */
+
+@media (max-width: 720px) {
+
+  .table-wrap {
+    max-height: 60vh;
+    overflow-y: auto;
+    padding-right: 4px;
+  }
+
+  .skills-table {
+    width: 100%;
+    table-layout: auto;
+    font-size: .9rem;
+  }
+
+  /* On cache l'en-tête */
+  .skills-table thead {
+    display: none;
+  }
+
+  /* On neutralise un peu le mode "table" */
+  .skills-table tbody {
+    display: block;
+  }
+
+  /* Chaque ligne devient un flex :
+     [ Skill name (flex:1) | Boss (auto) | Add (auto) ] */
+  .skills-table tbody tr {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: .4rem .35rem;
+    border-bottom: 1px solid rgba(255,255,255,.10);
+    height: auto;              /* écrase height:1.6rem */
+    min-height: 44px;
+  }
+
+  /* On masque les colonnes non désirées :
+     2 = Profession, 3 = Attribute, 4 = Campaign */
+  .skills-table td:nth-child(2),
+  .skills-table td:nth-child(3),
+  .skills-table td:nth-child(4) {
+    display: none;
+  }
+
+  /* On neutralise le nowrap global sur les cellules */
+  .skills-table td {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+    border-bottom: none;
+    padding: .2rem .15rem;
+  }
+
+  /* Skill name : prend la largeur restante */
+  .skills-table td:nth-child(1) {
+    flex: 1 1 auto;
+    font-weight: 600;
+  }
+  .skill-name {
+    white-space: normal;
+  }
+
+  /* Boss (bouton "locations") */
+  .skills-table td:nth-child(5) {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  .btn.btn--ghost {
+    padding: .35rem .7rem;
+    font-size: .8rem;
+  }
+
+  /* Add (checkbox) */
+  .skills-table td:nth-child(6) {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  .col-add {
+    width: auto;
+  }
 }
+

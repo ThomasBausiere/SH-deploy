@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, PLATFORM_ID, inject } from '@angular/core';
+import { Component, Inject, Input, OnInit, PLATFORM_ID, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { ApiServicePublic } from '../../utils/services/api-service-public';
 import { ApiServiceProtected } from '../../utils/services/api-service-protected';
@@ -16,7 +16,7 @@ export class NavBar implements OnInit {
   private api = inject(ApiServiceProtected);
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
-
+@Input() menuOpen = false;
   isLogged = false;
   isAdmin = false;
   isBrowser = false;
@@ -40,9 +40,16 @@ export class NavBar implements OnInit {
     this.apiPublic.logout();
     this.isLogged = false;
     this.isAdmin = false;
+    this.closeMenuMobile();
   }
 
   get token(): string | null {
     return this.apiPublic.getToken(); 
   }
+
+closeMenuMobile() {
+  if (window.innerWidth <= 720) {
+    this.menuOpen = false;
+  }
+}
 }

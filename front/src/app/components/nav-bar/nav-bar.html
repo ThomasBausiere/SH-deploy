@@ -1,21 +1,71 @@
-<nav class="top-nav">
-  <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+<nav class="top-nav" [class.mobile-open]="menuOpen">
 
+  <!-- HOME -->
+  <a 
+    routerLink="/" 
+    routerLinkActive="active" 
+    [routerLinkActiveOptions]="{ exact: true }"
+    (click)="closeMenuMobile()"
+  >
+    Home
+  </a>
 
-    <a routerLink="/showToons" routerLinkActive="active">Toons</a>
-
-@if (isLogged && isAdmin) {
-  <a routerLink="/admin" class="nav-link">Admin</a>
-}   
-@if(token){
-   <a routerLink="/settings" routerLinkActive="active">Account</a>
-}
- 
-
-  @if (token) {
-    <button (click)="logout()">Log Out</button>
-  } @else {
-    <a routerLink="/login" routerLinkActive="active">Login</a>
-    <a routerLink="/register" routerLinkActive="active">Register</a>
+  <!-- TOONS (uniquement si loggé) -->
+  @if (isLogged) {
+    <a 
+      routerLink="/showToons" 
+      routerLinkActive="active" 
+      (click)="closeMenuMobile()"
+    >
+      Toons
+    </a>
   }
+
+  <!-- ADMIN -->
+  @if (isLogged && isAdmin) {
+    <a 
+      routerLink="/admin" 
+      routerLinkActive="active"
+      (click)="closeMenuMobile()"
+    >
+      Admin
+    </a>
+  }
+
+  <!-- ACCOUNT (si loggé) -->
+  @if (isLogged) {
+    <a 
+      routerLink="/settings" 
+      routerLinkActive="active" 
+      (click)="closeMenuMobile()"
+    >
+      Account
+    </a>
+  }
+
+  <!-- LOGIN / REGISTER si non loggé -->
+  @if (!isLogged) {
+    <a 
+      routerLink="/login" 
+      routerLinkActive="active"
+      (click)="closeMenuMobile()"
+    >
+      Login
+    </a>
+    <a 
+      routerLink="/register" 
+      routerLinkActive="active"
+      (click)="closeMenuMobile()"
+    >
+      Register
+    </a>
+  }
+
+  <!-- LOGOUT si loggé -->
+  @if (isLogged) {
+    <button (click)="logout(); closeMenuMobile()">
+      Log Out
+    </button>
+  }
+
 </nav>

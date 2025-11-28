@@ -1,87 +1,117 @@
 :host {
+  display: block;
   grid-column: 2 / 3;
   grid-row: 1 / 2;
+
   max-width: 80%;
   min-width: 50%;
   justify-self: center;
 
-  /* conteneur neutre */
   background: transparent;
   padding: 0;
-  border: 0;
-  box-shadow: none;
 }
 
-/* ===== Nav pill ===== */
-nav.top-nav, :host > nav {
+/* ============================ */
+/*         DESKTOP NAV          */
+/* ============================ */
+.top-nav {
   display: flex;
   align-items: center;
   gap: .5rem;
-  padding: .4rem .6rem;
-  border: 1px solid rgba(255,255,255,.18);
-  border-radius: 999px;
-  background: rgba(0,0,0,.35);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+
+  padding: .45rem .7rem;
+  border-radius: var(--radius-full);
+
+  background: rgba(0, 0, 0, .35);
+  border: 1px solid rgba(255,255,255,.15);
+  backdrop-filter: var(--blur-medium);
+
+  box-shadow: var(--shadow-soft);
 }
 
-/* items */
-nav.top-nav a,
-nav.top-nav button,
-:host > nav a,
-:host > nav button {
+.top-nav a,
+.top-nav button {
   appearance: none;
-  border: 0;
+  border: none;
   background: transparent;
-  color: #fff;                      /* texte blanc */
-  text-decoration: none;
+
+  padding: .35rem .9rem;
+  border-radius: var(--radius-full);
+
+  color: var(--high-contast-text);
   font: inherit;
-  padding: .35rem .8rem;
-  border-radius: 999px;
   cursor: pointer;
-  line-height: 1;
+  text-decoration: none;
 }
 
-/* hover/focus */
-nav.top-nav a:hover,
-nav.top-nav a:focus-visible,
-nav.top-nav button:hover,
-nav.top-nav button:focus-visible,
-:host > nav a:hover,
-:host > nav a:focus-visible,
-:host > nav button:hover,
-:host > nav button:focus-visible {
-  background: rgba(255,255,255,.08);
-  outline: none;
+/* Hover */
+.top-nav a:hover,
+.top-nav button:hover {
+  background: rgba(255,255,255,.07);
 }
 
-/* actif = or (nécessite routerLinkActive="active") */
-nav.top-nav a.active,
-:host > nav a.active {
-  color: #d8a84a;
-  background: rgba(216,168,74,.12);
-  box-shadow: inset 0 0 0 1px rgba(216,168,74,.55);
+/* Active link */
+.top-nav a.active {
+  background: rgba(216,168,74,.2);
+  color: var(--main-solid-color);
+  box-shadow: inset 0 0 0 1px rgba(216,168,74,.8);
 }
 
-/* pousser Login/Register/Logout à droite
-   - si connecté: le bouton <button> est le premier item d'actions
-   - si non connecté: le lien /login est le premier item d'actions */
-:host > nav > button,
-:host > nav > a[href="/login"],
-nav.top-nav > button,
-nav.top-nav > a[href="/login"] {
+/* Pushes login/logout to the right en DESKTOP */
+.top-nav button,
+.top-nav a[href="/login"] {
   margin-left: auto;
 }
 
-/* bouton logout style discret mais cohérent */
-:host > nav > button,
-nav.top-nav > button {
-  color: #fff;
-}
+/* ============================ */
+/*         MOBILE MODE          */
+/* ============================ */
 
-/* petites tailles : compacter légèrement */
 @media (max-width: 720px) {
-  nav.top-nav, :host > nav { padding: .3rem .45rem; }
-  :host > nav a, :host > nav button,
-  nav.top-nav a, nav.top-nav button { padding: .3rem .6rem; }
+
+  /* le composant prend toute la largeur dans le panneau mobile */
+  :host {
+    grid-column: auto;
+    grid-row: auto;
+    max-width: 100%;
+    min-width: 100%;
+    justify-self: stretch;
+  }
+
+  /* NAV à l’intérieur du panneau mobile (.mobile-nav) */
+  .top-nav {
+    flex-direction: column;          /* éléments VERTICAUX */
+    align-items: stretch;
+
+    gap: .5rem;
+
+    width: 100%;
+    padding: 1rem;
+
+    border-radius: var(--radius-lg);
+
+    /* fond + bord léger, mais le gros “glass” est géré par .mobile-nav */
+    background: transparent;
+    border: none;
+    box-shadow: none;
+  }
+
+  .top-nav a,
+  .top-nav button {
+    width: 100%;                    /* occupe toute la largeur */
+    padding: .7rem 1rem;
+    border-radius: var(--radius-md);
+    text-align: center;             /* CENTRÉ horizontalement */
+    margin: 0;                      /* on annule le margin-left:auto */
+  }
+
+  /* override explicite de la règle desktop */
+  .top-nav button,
+  .top-nav a[href="/login"] {
+    margin-left: 0;
+  }
+
+  .top-nav a.active {
+    background: rgba(216,168,74,.15);
+  }
 }

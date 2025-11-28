@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, signal, Signal } from '@angular/core';
+import { Component, HostListener, Input, signal,Output, EventEmitter, Signal } from '@angular/core';
 import { BossType } from '../../utils/types/boss-type';
 import { CommonModule } from '@angular/common';
 
@@ -11,7 +11,8 @@ import { CommonModule } from '@angular/common';
 })
 export class BossList {
   @Input() bossList: BossType[] = [];
-
+  @Input() showBossList: boolean = false;
+  @Output() closeBossListEvent = new EventEmitter<void>();
   selectedBoss = signal<BossType | null>(null);
 
   openModal(boss: BossType) {
@@ -30,4 +31,17 @@ export class BossList {
   onEsc() {
     if (this.selectedBoss()) this.closeModal();
   }
+
+    isMobile = false;
+
+  constructor() {
+    this.isMobile = window.innerWidth <= 720;
+  }
+
+  /** appelé par le bouton ← Back */
+  closeBossList() {
+    this.closeBossListEvent.emit();
+  }
+
+  
 }

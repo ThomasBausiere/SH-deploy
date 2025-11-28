@@ -8,8 +8,16 @@
 <app-skills-list
   [skillsList]="displayedSkills"
   (showBossEvent)="handleData($event)"
-   (ownershipChange)="onOwnershipChange($event)"
+  (ownershipChange)="onOwnershipChange($event)"
+  (toggleBossList)="onToggleBossList($event)"
 />
 
 <app-toon-details />
-<app-boss-list [bossList]="bossList" />
+
+<app-boss-list
+  [bossList]="bossList"
+  [showBossList]="showBossList"
+  (closeBossListEvent)="onToggleBossList(false)"
+  [class.active]="showBossList"
+></app-boss-list>
+

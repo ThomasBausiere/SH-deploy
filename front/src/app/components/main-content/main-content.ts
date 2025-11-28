@@ -170,4 +170,9 @@ export class MainContent implements OnInit, OnDestroy {
  
   this.applyFilters();
 }
+showBossList = false;
+
+onToggleBossList(show: boolean) {
+  this.showBossList = show;
+}
 }

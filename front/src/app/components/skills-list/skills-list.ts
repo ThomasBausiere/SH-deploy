@@ -8,18 +8,21 @@ import {
 } from '@angular/core';
 import { SkillType } from '../../utils/types/skill-type';
 import { ApiServicePublic } from '../../utils/services/api-service-public';
-import { ApiServiceProtected } from '../../utils/services/api-service-protected';
+import { ApiServiceProtected } from '../../utils/services/api-service-protected'; 
 import { ToonType } from '../../utils/types/toon-type';
+import { BossType } from '../../utils/types/boss-type';
 
 @Component({
   selector: 'app-skills-list',
   imports: [],
   templateUrl: './skills-list.html',
   styleUrl: './skills-list.css',
-  standalone: true,
+  standalone: true, 
 })
 export class SkillsList implements OnInit {
   @Input() skillsList!: SkillType[];
+
+  @Output() toggleBossList = new EventEmitter<boolean>();
   @Output() showBossEvent = new EventEmitter<number>();
   @Output() ownershipChange = new EventEmitter<{
     skillId: number;
@@ -144,7 +147,7 @@ export class SkillsList implements OnInit {
       next: () => {
         this.ownershipChange.emit({ skillId, owned: false });
         finalize();
-      },
+      }, 
       error: (err) => {
         console.error('Suppression skill échouée', err);
         if (had) this.ownedSkillIds.add(skillId); 
@@ -152,10 +155,10 @@ export class SkillsList implements OnInit {
       },
     });
   }
-  listsBoss(id: number): void {
-    this.showBossEvent.emit(id);
-    console.log(id);
-  }
+listsBoss(id: number): void {
+  this.showBossEvent.emit(id);
+  this.toggleBossList.emit(true); 
+}
 
   get token(): string | null {
     return this.apipublic.getToken();

@@ -1,123 +1,283 @@
 :host {
-  /* était: overflow: auto;  -> ça clippe la modale */
-  overflow: visible;            /* laisse l’overlay dépasser du composant */
+  display: block;
+  width: 100%;
 }
-/* ——— Carte liste (léger) ——— */
+
+/* =============================== */
+/*  DESKTOP — LISTE CLASSIQUE      */
+/* =============================== */
+
 .boss-card {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: .75rem;
-  padding: .5rem .75rem;
-  border-radius: .5rem;
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.12);
-}
-.boss-name { margin: 0; }
-.btn { 
-  padding: .55rem 1rem; border: 0; border-radius: .5rem; cursor: pointer;
-  background: #ffd166; color: #fff; font-weight: 600;
-}
-.btn:hover { filter: brightness(1.05); }
-.btn--ghost { background: rgba(255,255,255,.08); color: #fff; }
+  padding: .6rem .9rem;
 
-/* ——— Overlay plein écran ——— */
+  background: var(--default-element-color);
+  border: 1px solid var(--default-animed-ui-border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+  color: var(--high-contast-text);
+}
+
+.boss-card:hover {
+  background: var(--hover-element-color);
+  border-color: var(--hover-animed-ui-border-color);
+}
+
+.boss-name {
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: .01em;
+}
+
+.btn {
+  padding: .45rem .9rem;
+  border-radius: var(--radius-md);
+  background: var(--main-solid-color);
+  color: var(--main-bg-color);
+  border: 1px solid var(--non-animed-ui-border-color);
+}
+
+.btn:hover {
+  background: var(--hover-solid-color);
+}
+
+.back-btn {
+  display: none;
+}
+
+/* ======================================== */
+/*      MOBILE — OVERLAY SUR SKILLS-LIST    */
+/* ======================================== */
+
+@media (max-width: 720px) {
+
+  /* Par défaut : caché */
+  :host {
+    display: none;
+  }
+
+  /* Quand activé via [class.active] */
+  :host.active {
+    display: block;
+    position: absolute;          /* <— clé : superpose le composant */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    z-index: 5000;               /* Passe au-dessus de skills-list */
+  }
+    .boss-overlay-bg {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+    backdrop-filter: var(--blur-light);
+  }
+
+  .boss-panel {
+        position: relative;
+    z-index: 2;
+    height: 100%;
+    overflow-y: auto;
+    padding: 14px;
+
+    background: var(--default-element-color);
+    border: 1px solid var(--default-animed-ui-border-color);
+    border-radius: var(--radius-lg);
+
+    backdrop-filter: var(--blur-medium);
+    box-shadow: var(--shadow-strong);
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+
+
+  /* Bouton Back */
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .25rem;
+
+    padding: .45rem .9rem;
+    border-radius: var(--radius-full);
+
+    background: var(--default-element-color);
+    border: 1px solid var(--default-animed-ui-border-color);
+    color: var(--high-contast-text);
+    font-weight: 600;
+  }
+
+  .back-btn:hover {
+    background: var(--hover-element-color);
+    border-color: var(--hover-animed-ui-border-color);
+  }
+
+  .boss-card {
+    padding: .7rem;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+  }
+
+  .btn {
+    padding: .35rem .75rem;
+    font-size: .85rem;
+  }
+}
+
+/* ======================================== */
+/*     MODALE POUR "Show" (commun)          */
+/* ======================================== */
+
+/* ==== OVERLAY ==== */
 .modal-overlay {
-  position: fixed; inset: 0;
-  z-index: 2147483646; /* au-dessus de tout */
-  display: grid; place-items: center;
-  background: rgba(0,0,0,.65);
-  backdrop-filter: blur(2px);
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(6px);
+  display: grid;
+  place-items: center;
 }
 
-/* ——— Dialog ——— */
+/* ==== MODAL ==== */
 .boss-modal {
-  position: relative;
-  margin: 0; padding: 0;
-  width: min(100vw - 2rem, 980px);
-  max-height: calc(100vh - 2rem);
-  border: 1px solid rgba(255,255,255,.14);
-  border-radius: 18px;
-  background: rgba(24,24,24,.78);
-  backdrop-filter: blur(10px);
+  width: min(900px, 90%);
+  max-height: calc(100vh - 3rem);
+
+  background: rgba(10,10,10,0.85);
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.15);
   overflow: hidden;
-  box-shadow: 0 30px 90px rgba(0,0,0,.6);
+
+  display: block;
+  padding: 0;
+  position: relative;
+
+  box-shadow: 0 35px 120px rgba(0,0,0,.6);
 }
 
-/* fallback si l’overlay n’est pas là (navigateurs gérant ::backdrop) */
-.boss-modal::backdrop {
-  background: rgba(0,0,0,.6);
-  backdrop-filter: blur(2px);
-}
-
-/* ——— Close (coin haut droit) ——— */
+/* ==== CLOSE BUTTON ==== */
 .modal-close {
-  position: absolute; top: .5rem; right: .5rem;
-  width: 2.25rem; height: 2.25rem; border-radius: 999px;
-  border: 1px solid rgba(255,255,255,.18);
-  background: rgba(255,255,255,.08); color: #fff;
-  font-size: 1.25rem; line-height: 1;
-}
-.modal-close:hover { background: rgba(255,255,255,.12); }
+  position: absolute;
+  top: 12px;
+  right: 12px;
 
-/* ——— Corps en grille 2 colonnes ——— */
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 50%;
+  cursor: pointer;
+  color: #fff;
+  font-size: 1.4rem;
+}
+
+.modal-close:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+/* ==== LAYOUT ==== */
 .modal-body {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0;
-  min-height: clamp(380px, 70vh, 680px);
+  height: 100%;
 }
 
-/* ——— Media gauche ——— */
-.modal-media {
-  margin: 0;
-  padding: 0;
-  display: grid;
-  place-items: center;
-  background: rgba(255, 255, 255, 0.03);
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
-  overflow: auto; /* pour scroller si image > conteneur */
-}
-
+/* ==== IMAGE ==== */
 .modal-media img {
-  max-width: 100%;
-  max-height: 100%;
-  height: auto;
-  width: auto;
-  object-fit: contain; /* garde le ratio */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ==== DETAILS ==== */
+.modal-details {
+  padding: 1.8rem;
+  color: var(--high-contast-text);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* << VERTICAL ALIGN OK */
+  gap: 1rem;
+}
+
+.modal-title {
+  font-size: 1.7rem;
+  margin-bottom: 0.5rem;
+  color: var(--main-solid-color);
+}
+
+.meta dt {
+  font-weight: 700;
+  margin-right: 8px;
+}
+
+.meta div {
+  display: flex;
+  gap: 8px;
+  margin-bottom: .4rem;
+}
+
+.description {
   display: block;
 }
 
-/* ——— Détails droite ——— */
-.modal-details {
-  display: grid;
-  grid-template-rows: auto auto 1fr auto;
-  gap: 1rem;
-  padding: 2rem;
-  color: #fff;
+/* ==== CLOSE BUTTON BOTTOM ==== */
+.btn-close {
+  align-self: flex-start;
+  background: var(--main-solid-color);
+  border: 1px solid var(--non-animed-ui-border-color);
+  color: var(--main-bg-color);
+  padding: .5rem 1rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
 }
-.modal-title {
-  margin: 0;
-  font-size: clamp(1.25rem, 2.2vw, 2rem);
-  color: #ffd166;
-}
-.meta { margin: 0; display: grid; gap: .25rem; }
-.meta > div { display: grid; grid-template-columns: 10ch 1fr; gap: .75rem; }
-.meta dt { opacity: .8; font-weight: 600; }
-.meta dd { margin: 0; }
 
-.boss-description { margin: .25rem 0 0; line-height: 1.6; opacity: .95; }
-.modal-actions { display: flex; justify-content: flex-end; height: 40px; gap: .75rem; }
-
-/* ——— Responsive ——— */
-@media (max-width: 900px) {
-  .modal-body { grid-template-columns: 1fr; }
-  .modal-media { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.08); }
-  .modal-details { padding: 1.25rem; }
+.btn-close:hover {
+  background: var(--hover-solid-color);
 }
-@media (prefers-reduced-motion: no-preference) {
-  .boss-modal { transform: translateY(8px) scale(.98); opacity: 0; animation: modal-in .22s ease-out both; }
-  @keyframes modal-in {
-    to { transform: translateY(0) scale(1); opacity: 1; }
+
+/* ================================================= */
+/*                     MOBILE                        */
+/* ================================================= */
+
+@media (max-width: 720px) {
+  .boss-modal {
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    border-radius: 0;
+  }
+
+  .modal-body {
+    grid-template-columns: 1fr;
+    overflow-y: auto;
+  }
+
+  .modal-details {
+    padding: 1rem 1.2rem;
+    justify-content: flex-start;
+  }
+
+  .modal-title {
+    text-align: center;
+    margin-top: .5rem;
+  }
+
+  .btn-close {
+    width: 100%;
+    text-align: center;
   }
 }
+

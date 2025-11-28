@@ -1,14 +1,20 @@
-*, ::before, ::after{
-  box-sizing: border-box;
+/* ========================= */
+/*        RESET GLOBAL       */
+/* ========================= */
+*,::before,::after{
   margin:0;
   padding:0;
+  box-sizing:border-box;
 }
 
-body{
-   height:100vh;
-   width:100%;
-   background-color:bisque;
+html,body{
+  width:100%;
+  min-height:100%;
+  font-family:var(--font-family-base);
+  color:var(--high-contast-text);
+  background:var(--main-bg-color);
 }
+
 
 
 .morphisme {
@@ -19,3 +25,217 @@ body{
   border: 1px solid rgba(255, 255, 255, 0.18); /* léger contour */
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2); /* ombre douce */
 }
+
+:root {
+
+  /* ============================== */
+  /*           COULEURS             */
+  /* ============================== */
+
+  /* Fond global noir profond */
+  --main-bg-color: #0a0a0a;
+
+  /* Fond "glass" sombre */
+  --sub-bg-color: rgba(255, 255, 255, 0.06);
+
+  /* Panneaux par défaut */
+  --default-element-color: rgba(14, 12, 12, 0.856);
+
+  /* Hover */
+  --hover-element-color: rgba(255, 255, 255, 0.12);
+
+  /* Élément sélectionné */
+  --selected-element-color: rgba(216,168,74, 0.25);
+
+  /* Bordures (or) */
+  --non-animed-ui-border-color: rgba(216,168,74,0.40);
+  --default-animed-ui-border-color: rgba(216,168,74,0.55);
+  --hover-animed-ui-border-color: rgba(216,168,74,0.75);
+
+  /* Accent or */
+  --main-solid-color: #d8a84a;
+  --hover-solid-color: #e6c178;
+
+  /* Textes */
+  --low-contrast-text: #d8a84a;
+  --high-contast-text: #f7e9c6;
+
+  /* États */
+  --succes-color: #113B29;
+  --error-color: #EC6142;
+
+  /* ============================== */
+  /*            TOKENS              */
+  /* ============================== */
+
+  /* Rayons */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 999px;
+
+  /* Ombres */
+  --shadow-soft: 0 4px 30px rgba(0,0,0,.25);
+  --shadow-strong: 0 25px 70px rgba(0,0,0,.45);
+
+  /* Glass blur */
+  --blur-light: blur(6px);
+  --blur-medium: blur(12px);
+  --blur-strong: blur(18px);
+
+  /* Typo */
+  --font-family-base: "Inter", Arial, sans-serif;
+  --font-size-sm: .85rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.25rem;
+}
+
+/* Text GLobal*/
+
+.text-low {
+  color: var(--low-contrast-text);
+}
+
+.text-high {
+  color: var(--high-contast-text);
+}
+
+.text-danger {
+  color: var(--error-color);
+}
+
+.text-success {
+  color: var(--succes-color);
+}
+
+/*Containers*/
+
+.glass {
+  background: var(--sub-bg-color);
+  border: 1px solid var(--non-animed-ui-border-color);
+  border-radius: var(--radius-lg);
+  backdrop-filter: var(--blur-medium);
+  -webkit-backdrop-filter: var(--blur-medium);
+  box-shadow: var(--shadow-soft);
+}
+
+.glass-strong {
+  background: var(--default-element-color);
+  border: 1px solid var(--default-animed-ui-border-color);
+  border-radius: var(--radius-lg);
+  backdrop-filter: var(--blur-strong);
+  -webkit-backdrop-filter: var(--blur-strong);
+  box-shadow: var(--shadow-strong);
+}
+
+.card {
+  background: var(--default-element-color);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--default-animed-ui-border-color);
+  padding:1.2rem;
+  box-shadow: var(--shadow-soft);
+}
+
+
+
+
+/*
+INPUT SELECT TEXTAREA
+*/
+
+.input, input, select, textarea {
+  width: 100%;
+  padding: .65rem .9rem;
+  background: var(--default-element-color);
+  border: 1px solid var(--default-animed-ui-border-color);
+  border-radius: var(--radius-md);
+  color: var(--high-contast-text);
+}
+
+
+.input:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline:none;
+  border-color: var(--hover-animed-ui-border-color);
+  box-shadow: 0 0 0 3px var(--hover-element-color);
+}
+
+/*Button*/
+button, .btn {
+  cursor: pointer;
+  padding: .55rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--default-animed-ui-border-color);
+  background: var(--default-element-color);
+  color: var(--high-contast-text);
+  font-weight: 600;
+  transition: .15s ease;
+}
+
+button:hover, .btn:hover {
+  background: var(--hover-element-color);
+  border-color: var(--hover-animed-ui-border-color);
+}
+
+.btn-primary {
+  background: var(--main-solid-color);
+  border-color: var(--non-animed-ui-border-color);
+  color: var(--main-bg-color);
+  border-radius: var(--radius-full);
+}
+
+.btn-primary:hover {
+  background: var(--hover-solid-color);
+}
+
+
+
+.btn-ghost {
+  background: transparent;
+  border-color: var(--non-animed-ui-border-color);
+  color: var(--high-contast-text);
+}
+
+.btn-ghost:hover {
+  background: var(--hover-element-color);
+}
+
+.btn-danger {
+  background: var(--error-color);
+  border-color: var(--error-color);
+  color:#fff;
+}
+
+.btn-danger:hover {
+  filter: brightness(1.1);
+}
+
+/*Tags/Chips*/
+
+.chip {
+  display:inline-flex;
+  align-items:center;
+  padding:.25rem .65rem;
+  border-radius:var(--radius-full);
+  background:var(--default-element-color);
+  border:1px solid var(--default-animed-ui-border-color);
+  color:var(--high-contast-text);
+  font-size:.85rem;
+}
+
+.chip:hover {
+  background:var(--hover-element-color);
+}
+
+/*Sections/Panels*/
+.panel {
+  padding:1rem;
+  background:var(--default-element-color);
+  border:1px solid var(--default-animed-ui-border-color);
+  border-radius:var(--radius-lg);
+}
+
+

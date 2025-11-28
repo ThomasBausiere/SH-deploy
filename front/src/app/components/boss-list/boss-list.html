@@ -1,76 +1,114 @@
 <section>
-  @if (bossList.length > 0) {
-    @for (b of bossList; track b.id) {
-      <article class="boss-card">
-        <p class="boss-name">{{ b.name }}</p>
-        <button
-          type="button"
-          class="btn btn--ghost"
-          (click)="openModal(b)"
-          aria-haspopup="dialog"
-          aria-controls="boss-modal"
-        >
-          Show
-        </button>
-      </article>
-    }
 
-    @if (selectedBoss()) {
-     
-      <div class="modal-overlay" (click)="onOverlayClick($event)">
-        <dialog
-          id="boss-modal"
-          open
-          class="boss-modal"
-          role="dialog"
-          aria-modal="true"
-          [attr.aria-labelledby]="'boss-title'"
-        >
+  <!-- ============================== -->
+  <!--        MOBILE PANEL           -->
+  <!-- ============================== -->
+@if (isMobile && showBossList && !selectedBoss()) {
+
+  <div class="boss-overlay-bg" (click)="closeBossList()"></div>
+
+  <div class="boss-panel" (click)="$event.stopPropagation()">
+    <button class="back-btn" (click)="closeBossList()">← Back</button>
+
+    @if (bossList.length > 0) {
+      @for (b of bossList; track b.id) {
+        <article class="boss-card">
+          <p class="boss-name">{{ b.name }}</p>
+          <button class="btn" type="button" (click)="openModal(b)">Show</button>
+        </article>
+      }
+    } @else { <p>No Boss found.</p> }
+  </div>
+
+}
+
+
+  <!-- ============================== -->
+  <!--        DESKTOP LIST           -->
+  <!-- ============================== -->
+  @if (!isMobile) {
+    @if (bossList.length > 0) {
+      @for (b of bossList; track b.id) {
+        <article class="boss-card">
+          <p class="boss-name">{{ b.name }}</p>
           <button
             type="button"
-            class="modal-close"
-            aria-label="Fermer"
-            (click)="closeModal()"
+            class="btn btn--ghost"
+            (click)="openModal(b)"
           >
-            ×
+            Show
           </button>
-
-          <div class="modal-body">
-            <figure class="modal-media">
-              <img
-                [src]="'/assets/images' + selectedBoss()?.urlPosition + '.jpg'"
-                [alt]="'Illustration de ' + selectedBoss()?.name"
-                width="640"
-                height="480"
-                loading="lazy"
-              />
-            </figure>
-
-            <section class="modal-details">
-              <h2 id="boss-title" class="modal-title">{{ selectedBoss()?.name }}</h2>
-
-              <dl class="meta">
-                <div><dt>Campaign: </dt><dd>{{ selectedBoss()?.campaign || '—' }}</dd></div>
-                <div><dt>Profession: </dt><dd>{{ selectedBoss()?.profession || '—' }}</dd></div>
-                <div><dt>Attribute: </dt><dd>{{ selectedBoss()?.eliteSkill?.attribute }}</dd></div>
-                <div><dt>Location: </dt><dd>{{ selectedBoss()?.position }}</dd></div>
-                <div><dt>Elite Skill: </dt><dd>{{ selectedBoss()?.eliteSkill?.name || '—' }}</dd></div>
-                <div><dt>Description: </dt><dd>{{ selectedBoss()?.eliteSkill?.description }}</dd></div>
-                <div><dt>Condition: </dt><dd>{{ selectedBoss()?.condition }}</dd></div>
-
-              </dl>
-
-
-
-              <div class="modal-actions">
-                <button type="button" class="btn" (click)="closeModal()">Close</button>
-              </div>
-            </section>
-          </div>
-        </dialog>
-      </div>
+        </article>
+      }
+    } @else {
+      <p>No Boss found.</p>
     }
-  } @else {
-    <p>No Boss found.</p>
   }
+
+  <!-- ============================== -->
+  <!--             MODAL             -->
+  <!-- ============================== -->
+@if (selectedBoss()) {
+<div class="modal-overlay" (click)="closeModal()">
+  <dialog
+    id="boss-modal"
+    open
+    class="boss-modal"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-labelledby]="'boss-title'"
+    (click)="$event.stopPropagation()"
+  >
+    <!-- CLOSE BUTTON -->
+    <button
+      type="button"
+      class="modal-close"
+      aria-label="Fermer"
+      (click)="closeModal()"
+    >
+      ×
+    </button>
+
+    <!-- BODY -->
+    <div class="modal-body">
+
+      <!-- IMAGE -->
+      <figure class="modal-media">
+        <img
+          [src]="'/assets/images' + selectedBoss()?.urlPosition + '.jpg'"
+          [alt]="'Illustration de ' + selectedBoss()?.name"
+          loading="lazy"
+        />
+      </figure>
+
+      <!-- DETAILS -->
+      <section class="modal-details">
+        <h2 id="boss-title" class="modal-title">
+          {{ selectedBoss()?.name }}
+        </h2>
+
+        <dl class="meta">
+          <div><dt>Campaign:</dt><dd>{{ selectedBoss()?.campaign || '—' }}</dd></div>
+          <div><dt>Profession:</dt><dd>{{ selectedBoss()?.profession || '—' }}</dd></div>
+          <div><dt>Attribute:</dt><dd>{{ selectedBoss()?.eliteSkill?.attribute }}</dd></div>
+          <div><dt>Location:</dt><dd>{{ selectedBoss()?.position }}</dd></div>
+          <div><dt>Elite Skill:</dt><dd>{{ selectedBoss()?.eliteSkill?.name || '—' }}</dd></div>
+          <div class="description">
+            <dt>Description:</dt>
+            <dd>{{ selectedBoss()?.eliteSkill?.description }}</dd>
+          </div>
+          <div><dt>Condition:</dt><dd>{{ selectedBoss()?.condition }}</dd></div>
+        </dl>
+
+        <button type="button" class="btn-close" (click)="closeModal()">
+          Close
+        </button>
+
+      </section>
+
+    </div>
+  </dialog>
+</div>
+}
+
 </section>
