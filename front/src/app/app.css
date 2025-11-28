@@ -161,3 +161,20 @@ HTML {
   }
 }
 
+
+/* ==================================== */
+/*    MOBILE LAYOUT FIX (essentiel !)   */
+/* ==================================== */
+@media (max-width: 720px) {
+  .app-container {
+    display: block !important;   /* on supprime la grille */
+    width: 100% !important;
+  }
+
+  .main-wrapper {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 1rem !important;
+  }
+}
+

@@ -239,3 +239,21 @@ button:hover, .btn:hover {
 }
 
 
+
+/* ============================== */
+/*  MOBILE — centrer les pages    */
+/* ============================== */
+@media (max-width: 720px) {
+  app-login,
+  app-register,
+  app-new-toon,
+  app-toon-list,
+  app-account,
+  app-account-settings {
+    display: block;
+    margin: 1.5rem auto !important;
+    width: 100%;
+    max-width: 380px;
+  }
+}
+
