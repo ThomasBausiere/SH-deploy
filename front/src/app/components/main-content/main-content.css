@@ -3,7 +3,7 @@
   grid-template-columns: 2fr 1fr;
   grid-template-rows: auto 1fr;
   gap: 20px;
-  height: fit-content;
+  height: 100%;
   padding: 20px;
   background: rgba(255, 255, 255, 0.08);
   border-radius: 16px;
@@ -90,3 +90,31 @@ app-skills-list {
   }
 }
 
+.gw-copyright {
+  position: absolute;
+  bottom: 6px; 
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.7rem;
+  line-height: 1.2;
+  opacity: 0.75;
+  text-align: center;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.gw-copyright a {
+  pointer-events: auto;
+  color: inherit;
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .gw-copyright {
+    position: absolute;
+    bottom: 0;
+    white-space: normal;
+    padding: 0 8px;
+    font-size: 0.5rem;
+  }
+}
