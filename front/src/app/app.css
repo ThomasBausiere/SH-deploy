@@ -178,3 +178,29 @@ HTML {
   }
 }
 
+.gw-legal {
+  position: fixed;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.72rem;
+  opacity: 0.8;
+  text-align: center;
+  white-space: nowrap;
+  z-index: 99999;
+  pointer-events: none;  /* ne bloque jamais les clics */
+}
+
+.gw-legal a {
+  pointer-events: auto;  /* mais le lien, lui, reste cliquable */
+  color: inherit;
+  text-decoration: underline;
+}
+
+/* Mobile : autoriser la coupure de ligne */
+@media (max-width: 480px) {
+  .gw-legal {
+    white-space: normal;
+    max-width: 90%;
+  }
+}
