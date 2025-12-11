@@ -24,7 +24,7 @@ export class MainContent implements OnInit, OnDestroy {
   displayedSkills: SkillType[] = [];
 
   bossList: BossType[] = [];
-  idSkill = 1;
+  idSkill = 0;
 
   // état de search / filtres
   searchText = '';

@@ -1,11 +1,11 @@
 :host{
   display:block; width:100%; height:95%;
   padding:10px; box-sizing:border-box;
-  background:rgba(255,255,255,.08);
+  background: rgba(0, 0, 0, .35);
   border-radius:16px; backdrop-filter:blur(12px);
   -webkit-backdrop-filter:blur(12px);
-  border:1px solid rgba(255,255,255,.18);
-  box-shadow:0 4px 30px rgba(0,0,0,.2);
+  border:1px solid rgba(255,255,255,.15);
+  box-shadow:var(--shadow-soft);
   overflow:hidden; 
 }
 
@@ -20,7 +20,8 @@
   table-layout:fixed;  
   width:100%;          
   border-collapse:separate; border-spacing:0;
-  color:#fff; font-size:.85rem; line-height:1.2;
+  color:var(--high-contast-text);
+   font-size:.85rem; line-height:1.2;
 }
 
 .skills-table col.col-skill{      width:28%; }
@@ -59,10 +60,10 @@
 /* boutons compacts */
 .btn{
   padding:.25rem .5rem; font-size:.8rem; border:0; border-radius:.35rem;
-  background:#ffd166; color:#fff; font-weight:600; cursor:pointer;
+  background:#ffd166; color:var(--high-contast-text); font-weight:600; cursor:pointer;
 }
 .btn:hover{ filter:brightness(1.05); }
-.btn--ghost{ background:rgba(255,255,255,.10); color:#fff; }
+.btn--ghost{ background:rgba(255,255,255,.10); color:var(--high-contast-text) }
 
 /* la colonne Add reste serrée */
 .col-add{ width:1%; }
