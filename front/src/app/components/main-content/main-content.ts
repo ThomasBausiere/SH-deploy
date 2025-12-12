@@ -162,10 +162,10 @@ export class MainContent implements OnInit, OnDestroy {
   onOwnershipChange(e: { skillId: number; owned: boolean }) {
   if (e.owned) {
     this.ownedIds.add(e.skillId);
-     this.live.incOwned();
+     
   } else {
     this.ownedIds.delete(e.skillId);
-    this.live.decOwned();  
+    
   }
  
   this.applyFilters();

@@ -9,6 +9,7 @@ import {
 import { Router, RouterLink } from '@angular/router';
 import { ApiServicePublic } from '../../utils/services/api-service-public';
 import { UserRegister, UserPublic } from '../../utils/types/user-public';
+import { AuthStateService } from '../../utils/services/auth-state-service';
 
 type User = {
   email: string;
@@ -23,7 +24,7 @@ type User = {
   styleUrl: './login.css',
 })
 export class Login {
-  constructor(private apiService: ApiServicePublic, private router: Router) {}
+  constructor(private apiService: ApiServicePublic, private router: Router, private auth: AuthStateService) { }
 
   isSubmitted: boolean = false;
 
@@ -33,7 +34,7 @@ export class Login {
   });
 
 
-  get token():string |null{
+  get token(): string | null {
     return this.apiService.getToken();
   }
 
@@ -43,7 +44,7 @@ export class Login {
     password: '',
   };
 
-    formGroup: FormGroup = new FormGroup({
+  formGroup: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
   });
@@ -54,8 +55,7 @@ export class Login {
     let user = this.form.value as UserRegister;
 
     this.apiService.login(user).subscribe((res) => {
-      console.log('Response', res);
-      console.log('Logged!');
+      this.auth.refresh();
       this.router.navigate(['/showToons']);
     });
   }
