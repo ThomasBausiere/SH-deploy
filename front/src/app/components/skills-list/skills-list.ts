@@ -8,8 +8,10 @@ import {
 } from '@angular/core';
 import { SkillType } from '../../utils/types/skill-type';
 import { ApiServicePublic } from '../../utils/services/api-service-public';
-import { ApiServiceProtected } from '../../utils/services/api-service-protected'; 
+import { ApiServiceProtected } from '../../utils/services/api-service-protected';
 import { ToonType } from '../../utils/types/toon-type';
+import { ToonLiveStateService } from '../../utils/services/toon-live-state-service';
+import { VisitorToonService } from '../../utils/services/visitor-toon-service';
 import { BossType } from '../../utils/types/boss-type';
 
 @Component({
@@ -17,7 +19,7 @@ import { BossType } from '../../utils/types/boss-type';
   imports: [],
   templateUrl: './skills-list.html',
   styleUrl: './skills-list.css',
-  standalone: true, 
+  standalone: true,
 })
 export class SkillsList implements OnInit {
   @Input() skillsList!: SkillType[];
@@ -31,6 +33,9 @@ export class SkillsList implements OnInit {
 
   apipublic = inject(ApiServicePublic);
   apiProtected = inject(ApiServiceProtected);
+  live = inject(ToonLiveStateService);
+  visitor = inject(VisitorToonService);
+
 
   selectedToonId: number | null = null;
 
@@ -43,7 +48,12 @@ export class SkillsList implements OnInit {
         ? localStorage.getItem('selectedToonId')
         : null;
     this.selectedToonId = raw ? Number(raw) : null;
-
+    if (!this.token) {
+      const ids = this.visitor.getSkillIds();
+      this.ownedSkillIds = new Set(ids);
+      this.live.setOwnedCount(ids.length);
+      return;
+    }
     if (this.selectedToonId && !Number.isNaN(this.selectedToonId)) {
       this.loadToonSkills(this.selectedToonId);
     }
@@ -67,7 +77,14 @@ export class SkillsList implements OnInit {
       if (id && !Number.isNaN(id)) {
         this.loadToonSkills(id);
       } else {
-        this.ownedSkillIds.clear();
+        if (!this.token) {
+          const ids = this.visitor.getSkillIds();
+          this.ownedSkillIds = new Set(ids);
+          this.live.setOwnedCount(ids.length);
+        } else {
+          this.ownedSkillIds.clear();
+          this.live.setOwnedCount(0);
+        }
       }
     }
   };
@@ -75,9 +92,9 @@ export class SkillsList implements OnInit {
   private loadToonSkills(toonId: number) {
     this.apiProtected.getToon(toonId).subscribe({
       next: (toon: ToonType) => {
-        console.log('Toon chargé depuis l’API :', toon);
         const ids = (toon?.skills ?? []).map((s) => s.id);
         this.ownedSkillIds = new Set(ids);
+        this.live.setOwnedCount(ids.length);
       },
       error: (err) =>
         console.error('Impossible de charger le Toon sélectionné', err),
@@ -92,14 +109,36 @@ export class SkillsList implements OnInit {
   onToggleSkill(skill: SkillType, event: Event): void {
     const checked = (event.target as HTMLInputElement).checked;
 
+    // ✅ VISITOR MODE (pas de token) : on bosse en local
+    if (!this.token) {
+      if (this.loadingSkillIds.has(skill.id)) return;
+      this.loadingSkillIds.add(skill.id);
+      const done = () => this.loadingSkillIds.delete(skill.id);
+
+      if (checked) {
+        this.ownedSkillIds.add(skill.id);
+        const ids = this.visitor.add(skill.id);
+        this.live.setOwnedCount(ids.length);
+        this.ownershipChange.emit({ skillId: skill.id, owned: true });
+        done();
+      } else {
+        this.ownedSkillIds.delete(skill.id);
+        const ids = this.visitor.remove(skill.id);
+        this.live.setOwnedCount(ids.length);
+        this.ownershipChange.emit({ skillId: skill.id, owned: false });
+        done();
+      }
+      return;
+    }
+
     if (!this.selectedToonId) {
       console.warn('Aucun Toon sélectionné dans la session.');
       return;
     }
-    if (!this.token) {
-      console.warn('Utilisateur non authentifié.');
-      return;
-    }
+    // if (!this.token) {
+    //   console.warn('Utilisateur non authentifié.');
+    //   return;
+    // }
     if (this.loadingSkillIds.has(skill.id)) return;
 
     this.loadingSkillIds.add(skill.id);
@@ -119,17 +158,18 @@ export class SkillsList implements OnInit {
       return;
     }
 
-    this.ownedSkillIds.add(skillId); 
+    this.ownedSkillIds.add(skillId);
 
     this.apiProtected.addSkillToon(this.selectedToonId, skillId).subscribe({
       next: () => {
-      
-        this.ownershipChange.emit({ skillId, owned: true }); 
+
+        this.ownershipChange.emit({ skillId, owned: true })
+        this.live.incOwned();
         finalize();
       },
       error: (err) => {
         console.error('Ajout skill échoué', err);
-        this.ownedSkillIds.delete(skillId); 
+        this.ownedSkillIds.delete(skillId);
         finalize();
       },
     });
@@ -141,24 +181,25 @@ export class SkillsList implements OnInit {
       return;
     }
 
-    const had = this.ownedSkillIds.delete(skillId); 
+    const had = this.ownedSkillIds.delete(skillId);
 
     this.apiProtected.removeSkillToon(this.selectedToonId, skillId).subscribe({
       next: () => {
-        this.ownershipChange.emit({ skillId, owned: false });
+        this.ownershipChange.emit({ skillId, owned: false })
+        this.live.decOwned();
         finalize();
-      }, 
+      },
       error: (err) => {
         console.error('Suppression skill échouée', err);
-        if (had) this.ownedSkillIds.add(skillId); 
+        if (had) this.ownedSkillIds.add(skillId);
         finalize();
       },
     });
   }
-listsBoss(id: number): void {
-  this.showBossEvent.emit(id);
-  this.toggleBossList.emit(true); 
-}
+  listsBoss(id: number): void {
+    this.showBossEvent.emit(id);
+    this.toggleBossList.emit(true);
+  }
 
   get token(): string | null {
     return this.apipublic.getToken();

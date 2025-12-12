@@ -4,6 +4,9 @@ import { ApiServiceProtected } from '../../utils/services/api-service-protected'
 import { ToonType } from '../../utils/types/toon-type';
 import { ToonLiveStateService } from '../../utils/services/toon-live-state-service';
 import { Subscription } from 'rxjs';
+import { ApiServicePublic } from '../../utils/services/api-service-public';
+import { VisitorToonService } from '../../utils/services/visitor-toon-service';
+
 
 @Component({
   selector: 'app-toon-details',
@@ -15,6 +18,8 @@ import { Subscription } from 'rxjs';
 export class ToonDetails implements OnInit, OnDestroy {
   private api = inject(ApiServiceProtected);
   private live = inject(ToonLiveStateService);
+private apipublic = inject(ApiServicePublic);
+private visitor = inject(VisitorToonService);
 
   private readonly isBrowser: boolean;
 
@@ -41,10 +46,19 @@ export class ToonDetails implements OnInit, OnDestroy {
     this.sub.add(
       this.live.selectedToonId$.subscribe((toonId) => {
         if (!toonId) {
-          this.toon = null;
-          this.ownedCount = 0;
-          return;
-        }
+  this.toon = null;
+
+  // ✅ si visiteur, on affiche le compteur local
+  if (!this.apipublic.getToken()) {
+    const ids = this.visitor.getSkillIds();
+    this.ownedCount = ids.length;
+    this.live.setOwnedCount(ids.length);
+  } else {
+    this.ownedCount = 0;
+    this.live.setOwnedCount(0);
+  }
+  return;
+}
         this.loading = true;
         this.api.getToon(toonId).subscribe({
           next: (t) => {

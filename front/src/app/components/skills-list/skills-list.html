@@ -43,7 +43,7 @@
             type="checkbox"
             [checked]="hasSkill(s.id)"
             (change)="onToggleSkill(s, $event)"
-            [disabled]="!token || !selectedToonId || loadingSkillIds.has(s.id)"
+            [disabled]="(token && !selectedToonId) || loadingSkillIds.has(s.id)"
             aria-label="ADD/REMOVE"
           />
         </td>
