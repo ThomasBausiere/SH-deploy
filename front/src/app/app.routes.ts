@@ -10,9 +10,11 @@ import { loginRedirect } from './utils/guards/loginRedirect';
 import { isAdminGuard } from './utils/guards/is-admin.guard';
 import { AdminPanel } from './components/admin-panel/admin-panel';
 import { Settings } from './components/settings/settings';
+import { Home } from './components/home/home';
 
 export const routes: Routes = [
-    {path:"", component:MainContent},
+    {path:"", component:Home},
+    {path:"skills", component:MainContent},
     {path:"login", component:Login, canActivate: [loginRedirect]},
     {path:"register", component:Register,canActivate: [loginRedirect]},
     {path:"newToon", component:Newtoon, canActivate: [isLoggedGuard]},
